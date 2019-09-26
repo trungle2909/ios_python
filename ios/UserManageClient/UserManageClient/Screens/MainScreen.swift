@@ -20,6 +20,7 @@ class MainScreen: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         self.navigationItem.title = "User Management"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(onAdd))
         view.sv (
             tableView
         )
@@ -30,6 +31,13 @@ class MainScreen: UIViewController {
         tableView.Top == view.safeAreaLayoutGuide.Top
         tableView.dataSource = self
         tableView.delegate = self
+    }
+    @objc func onAdd(){
+        let nextVC = AddVC()
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        navigationItem.backBarButtonItem = backItem
+        self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,7 +94,12 @@ extension MainScreen: UITableViewDelegate {
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
-        self.navigationController?.pushViewController(EditScreen(), animated: true)
+        let nextVC = EditScreen()
+        nextVC.id = self.json![indexPath.row]["id"].stringValue
+        nextVC.name = self.json![indexPath.row]["name"].stringValue
+        nextVC.email = self.json![indexPath.row]["email"].stringValue
+        nextVC.pass = self.json![indexPath.row]["password"].stringValue
+        self.navigationController?.pushViewController(nextVC, animated: true)
     }
   
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

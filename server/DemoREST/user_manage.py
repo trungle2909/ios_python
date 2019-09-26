@@ -51,7 +51,8 @@ class Users:
     def create_a_new_user(self, user):
         user['id'] = self.get_next_id()
         self.users.append(user)
-        return user['id']
+        new_success = True
+        return new_success
 
     # Bước 7C
     def get_next_id(self):
